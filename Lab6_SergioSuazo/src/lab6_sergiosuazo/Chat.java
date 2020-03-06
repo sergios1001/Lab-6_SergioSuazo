@@ -48,7 +48,7 @@ public class Chat extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jl_usuarios = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        ta_mensaje = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -135,9 +135,9 @@ public class Chat extends javax.swing.JFrame {
         jl_usuarios.setModel(new DefaultListModel());
         jScrollPane2.setViewportView(jl_usuarios);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        ta_mensaje.setColumns(20);
+        ta_mensaje.setRows(5);
+        jScrollPane3.setViewportView(ta_mensaje);
 
         jButton4.setText("Send");
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -260,7 +260,7 @@ public class Chat extends javax.swing.JFrame {
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
         try {
-            adminUsuario au = new adminUsuario("./Users");
+            adminUsuario au = new adminUsuario("./Users.txt");
             au.cargarArchivo();
             Date fecha=dc_fecha.getDate();
             Date hoy=new Date();
@@ -305,12 +305,13 @@ public class Chat extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        adminUsuario au=new adminUsuario("./Users");
+        adminUsuario au=new adminUsuario("./Users.txt");
         boolean login=false;
         au.cargarArchivo();
         for (int i = 0; i < au.getListaPersonas().size(); i++) {
             if(au.getListaPersonas().get(i).getUser().equals(tf_user.getText()))
             {
+                current=au.getListaPersonas().get(i);
                 login=true;
                 break;
             }
@@ -336,8 +337,38 @@ public class Chat extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
-        
-        ta_conversacion.getText();
+        char opcion;
+        String texto;
+        String resp="";
+        int temp;
+        texto=ta_mensaje.getText();
+        opcion=texto.charAt(texto.length()-1);
+        switch(opcion)
+        {
+            case '1':
+            {
+                
+            }
+            case'2':
+            {
+                for (int i = 0; i < texto.length()-1; i++) {
+                    if(texto.charAt(i)!=' ')
+                    {
+                        temp=texto.charAt(i);
+                        resp+=temp+" ";
+                    }
+                }
+                ta_conversacion.setText(current.getNombre()+": "+texto+"\n easyCypher: "+resp);
+            }
+            case'3':
+            {
+                
+            }
+            case'4':
+            {
+                
+            }
+        }
     }//GEN-LAST:event_jButton4MouseClicked
 
     /**
@@ -391,12 +422,12 @@ public class Chat extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JDialog jd_chat;
     private javax.swing.JDialog jd_newUser;
     private javax.swing.JList<String> jl_usuarios;
     private javax.swing.JPasswordField pf_contra;
     private javax.swing.JTextArea ta_conversacion;
+    private javax.swing.JTextArea ta_mensaje;
     private javax.swing.JTextField tf_contra;
     private javax.swing.JTextField tf_newUser;
     private javax.swing.JTextField tf_nombre;
