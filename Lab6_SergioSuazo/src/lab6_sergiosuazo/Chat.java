@@ -337,17 +337,39 @@ public class Chat extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
-        char opcion;
+        char opcion,temp1;
         String texto;
         String resp="";
-        int temp;
+        int temp,temp2;
         texto=ta_mensaje.getText();
+        String[] token=texto.split(" ");
         opcion=texto.charAt(texto.length()-1);
         switch(opcion)
         {
             case '1':
             {
-                
+                for (int i = 0; i < token.length; i++) {
+                    if(token[i].length()<=3)
+                    {
+                        String s=token[i]+"way";
+                        resp+=s+" ";
+                    }
+                    else
+                    {
+                        if(token[i].charAt(0)=='a'||token[i].charAt(0)=='e'||token[i].charAt(0)=='i'||token[i].charAt(0)=='o'||token[i].charAt(0)=='u'||token[i].charAt(0)=='A'||token[i].charAt(0)=='E'||token[i].charAt(0)=='I'||token[i].charAt(0)=='O'||token[i].charAt(0)=='U')
+                        {
+                            String s=token[i]+"ay";
+                            resp+=s+" ";
+                        }
+                        else
+                        {
+                            while(token[i].charAt(0)!='a'||token[i].charAt(0)!='e'||token[i].charAt(0)!='i'||token[i].charAt(0)!='o'||token[i].charAt(0)!='u'||token[i].charAt(0)!='A'||token[i].charAt(0)!='E'||token[i].charAt(0)!='I'||token[i].charAt(0)!='O'||token[i].charAt(0)!='U')
+                            {
+                                if(token[i].charAt(0))
+                            }
+                        }
+                    }
+                }
             }
             case'2':
             {
@@ -358,11 +380,45 @@ public class Chat extends javax.swing.JFrame {
                         resp+=temp+" ";
                     }
                 }
-                ta_conversacion.setText(current.getNombre()+": "+texto+"\n easyCypher: "+resp);
+                ta_conversacion.setText(current.getUser()+": "+texto+"\n easyCypher: "+resp);
             }
             case'3':
             {
-                
+                for (int i = 0; i < texto.length()-1; i++) {
+                    if(texto.charAt(i)!=' ')
+                    {
+                        temp=texto.charAt(i);
+                        if(temp<=77)
+                        {
+                            temp2=77-temp;
+                            temp2=+78;
+                            resp+=(char)temp2;
+                        }
+                        if(temp>=78&&temp<97)
+                        {
+                            temp-=78;
+                            temp2=77-temp;
+                            resp+=(char)temp2;
+                        }
+                        if(temp<=109&&temp>=97)
+                        {
+                            temp2=109-temp;
+                            temp2+=110;
+                            resp+=(char)temp2;
+                        }
+                        if(temp>=110)
+                        {
+                            temp-=110;
+                            temp2=109-temp;
+                            resp+=(char)temp2;
+                        }
+                    }
+                    else
+                    {
+                        resp+=' ';
+                    }
+                }
+                ta_conversacion.setText(current.getNombre()+": "+texto+"\n easyCypher: "+resp);
             }
             case'4':
             {
