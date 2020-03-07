@@ -5,9 +5,13 @@
  */
 package lab6_sergiosuazo;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,6 +54,7 @@ public class Chat extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         ta_mensaje = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tf_user = new javax.swing.JTextField();
@@ -146,6 +151,13 @@ public class Chat extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Salir");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jd_chatLayout = new javax.swing.GroupLayout(jd_chat.getContentPane());
         jd_chat.getContentPane().setLayout(jd_chatLayout);
         jd_chatLayout.setHorizontalGroup(
@@ -159,10 +171,14 @@ public class Chat extends javax.swing.JFrame {
                     .addGroup(jd_chatLayout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(23, Short.MAX_VALUE))
+                        .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_chatLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jd_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_chatLayout.createSequentialGroup()
+                                .addComponent(jButton5)
+                                .addGap(19, 19, 19)))
                         .addGap(50, 50, 50))))
         );
         jd_chatLayout.setVerticalGroup(
@@ -180,7 +196,9 @@ public class Chat extends javax.swing.JFrame {
                     .addGroup(jd_chatLayout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addContainerGap())))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -292,6 +310,7 @@ public class Chat extends javax.swing.JFrame {
                 }
                 
             }
+            JOptionPane.showMessageDialog(this, "Se creo el usuario exitosamente");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al crear el ususario");
         }
@@ -337,8 +356,9 @@ public class Chat extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
-        char opcion,temp1;
+        char opcion;
         String texto;
+        int ref=0;
         String resp="";
         int temp,temp2;
         texto=ta_mensaje.getText();
@@ -363,13 +383,25 @@ public class Chat extends javax.swing.JFrame {
                         }
                         else
                         {
-                            while(token[i].charAt(0)!='a'||token[i].charAt(0)!='e'||token[i].charAt(0)!='i'||token[i].charAt(0)!='o'||token[i].charAt(0)!='u'||token[i].charAt(0)!='A'||token[i].charAt(0)!='E'||token[i].charAt(0)!='I'||token[i].charAt(0)!='O'||token[i].charAt(0)!='U')
-                            {
-                                if(token[i].charAt(0))
+                            for (int j = 0; j < token[i].length(); j++) {
+                                if(token[i].charAt(j)=='a'||token[i].charAt(j)=='e'||token[i].charAt(j)=='i'||token[i].charAt(j)=='o'||token[i].charAt(j)=='u')
+                                {
+                                    ref=j;
+                                    break;
+                                }
                             }
+                            for (int j = ref; j < token[i].length(); j++) {
+                                resp+=token[i].charAt(j);
+                            }
+                            for (int j = 0; j < ref; j++) {
+                                resp+=token[i].charAt(j);
+                            }
+                            resp+="ay ";
                         }
                     }
                 }
+                ta_conversacion.setText(current.getUser()+": "+texto+"\n easyCypher: "+resp+"\n");
+                break;
             }
             case'2':
             {
@@ -380,7 +412,8 @@ public class Chat extends javax.swing.JFrame {
                         resp+=temp+" ";
                     }
                 }
-                ta_conversacion.setText(current.getUser()+": "+texto+"\n easyCypher: "+resp);
+                ta_conversacion.setText(current.getUser()+": "+texto+"\n easyCypher: "+resp+"\n");
+                break;
             }
             case'3':
             {
@@ -418,14 +451,25 @@ public class Chat extends javax.swing.JFrame {
                         resp+=' ';
                     }
                 }
-                ta_conversacion.setText(current.getNombre()+": "+texto+"\n easyCypher: "+resp);
+                ta_conversacion.setText(current.getNombre()+": "+texto+"\n easyCypher: "+resp+"\n");
+                break;
             }
             case'4':
             {
-                
+                break;
             }
+            
         }
+        ta_mensaje.setText("");
     }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        // TODO add your handling code here:
+        guardarArchivo();
+        jd_newUser.setVisible(false);
+        ta_conversacion.setText("");
+        ta_mensaje.setText("");
+    }//GEN-LAST:event_jButton5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -461,6 +505,32 @@ public class Chat extends javax.swing.JFrame {
             }
         });
     }
+    public void guardarArchivo(){
+        try
+        {
+            String nombre="";
+            JFileChooser file=new JFileChooser();
+            file.showSaveDialog(this);
+            File guarda =file.getSelectedFile();
+
+            if(guarda !=null)
+            {
+              FileWriter  save=new FileWriter(guarda+".txt");
+              save.write(ta_conversacion.getText());
+              save.close();
+              JOptionPane.showMessageDialog(null,
+                   "El archivo se a guardado Exitosamente",
+                       "Información",JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+     catch(IOException ex)
+     {
+      JOptionPane.showMessageDialog(null,
+           "Su archivo no se ha guardado",
+              "Advertencia",JOptionPane.WARNING_MESSAGE);
+     }
+ }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser dc_fecha;
@@ -468,6 +538,7 @@ public class Chat extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -491,5 +562,6 @@ public class Chat extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     Usuario current;
+    
 
 }
