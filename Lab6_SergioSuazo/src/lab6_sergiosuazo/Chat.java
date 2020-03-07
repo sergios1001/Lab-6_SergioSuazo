@@ -356,14 +356,19 @@ public class Chat extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
         // TODO add your handling code here:
-        char opcion;
+        char opcion=' ';
         String texto;
         int ref=0;
         String resp="";
         int temp,temp2;
         texto=ta_mensaje.getText();
         String[] token=texto.split(" ");
-        opcion=texto.charAt(texto.length()-1);
+        for (int i = 0; i < token.length; i++) {
+            if(Character.isDigit(token[i].charAt(0)))
+            {
+                opcion=token[i].charAt(0);
+            }
+        }
         switch(opcion)
         {
             case '1':
@@ -451,10 +456,14 @@ public class Chat extends javax.swing.JFrame {
                         resp+=' ';
                     }
                 }
-                ta_conversacion.setText(current.getNombre()+": "+texto+"\n easyCypher: "+resp+"\n");
+                ta_conversacion.setText(current.getUser()+": "+texto+"\n easyCypher: "+resp+"\n");
                 break;
             }
             case'4':
+            {
+                break;
+            }
+            default:
             {
                 break;
             }
@@ -466,7 +475,7 @@ public class Chat extends javax.swing.JFrame {
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         // TODO add your handling code here:
         guardarArchivo();
-        jd_newUser.setVisible(false);
+        jd_chat.setVisible(false);
         ta_conversacion.setText("");
         ta_mensaje.setText("");
     }//GEN-LAST:event_jButton5MouseClicked
